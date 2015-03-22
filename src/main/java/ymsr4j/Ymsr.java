@@ -7,6 +7,8 @@ import ymsr4j.ymsr4j.model.Incenses;
 import ymsr4j.ymsr4j.model.Users;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by razon on 15/03/14.
@@ -14,6 +16,14 @@ import java.io.IOException;
 public class Ymsr {
     private static final String API_ROOT = "http://haka.yamashi.ro/api/v1/";
     private static final ObjectMapper MAPPER = new ObjectMapper();
+    static {
+        MAPPER.setDateFormat(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ"){
+            public Date parse(String source) throws java.text.ParseException {
+                final int split = source.length() - 2;
+                return super.parse(source.substring(0, split - 1) + source.substring(split));
+            };
+        });
+    }
 
     public static Incenses incenses(int page) throws IOException {
         HttpResponse response = HttpClient.get(API_ROOT + "incenses?page=" + page);

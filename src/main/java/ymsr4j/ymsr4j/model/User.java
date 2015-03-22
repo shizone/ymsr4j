@@ -14,5 +14,5 @@ public class User {
     private String nickname;
     private String image;
     @JsonProperty("created_at")
-    private String createdAt;
+    private Date createdAt;
 }

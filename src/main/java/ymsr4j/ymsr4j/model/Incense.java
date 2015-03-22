@@ -11,6 +11,6 @@ import java.util.Date;
 @Data
 public class Incense {
     @JsonProperty("created_at")
-    private String createdAt;
+    private Date createdAt;
     private User user;
 }
