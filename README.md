@@ -1,2 +1,2 @@
 # ymsr4j
-haka,yamashi.ro API wrapper for Java
+[haka.yamashi.ro](http://haka.yamashi.ro/documents) API wrapper for Java
