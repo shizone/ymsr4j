@@ -1,38 +1,37 @@
 package ymsr4j;
 
-import java.io.BufferedWriter;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import ymsr4j.ymsr4j.http.HttpClient;
+import ymsr4j.ymsr4j.http.HttpResponse;
+import ymsr4j.ymsr4j.model.Incenses;
+import ymsr4j.ymsr4j.model.Users;
+
 import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
 
 /**
  * Created by razon on 15/03/14.
  */
 public class Ymsr {
     private static final String API_ROOT = "http://haka.yamashi.ro/api/v1/";
+    private static final ObjectMapper MAPPER = new ObjectMapper();
+
+    public static Incenses incenses(int page) throws IOException {
+        HttpResponse response = HttpClient.get(API_ROOT + "incenses?page=" + page);
+        return MAPPER.readValue(response.getHttpResponse(), Incenses.class);
+    }
 
     public static int incenses(String token) throws IOException {
-        URL url = new URL(API_ROOT + "incenses");
-        HttpURLConnection connection = null;
-        try {
-            connection = (HttpURLConnection) url.openConnection();
-            connection.setDoOutput(true);
-            connection.setRequestMethod("POST");
+        HttpResponse response = HttpClient.post(API_ROOT + "incenses", "token=" + token);
+        return response.getHttpResponseCode();
+    }
 
-            try(BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream(),
-                    StandardCharsets.UTF_8))) {
-                writer.write("token=");
-                writer.write(token);
-                writer.flush();
-            }
+    public static Users users(String nickname) throws IOException {
+        HttpResponse response = HttpClient.get(API_ROOT + "users/" + nickname);
+        return MAPPER.readValue(response.getHttpResponse(), Users.class);
+    }
 
-            return connection.getResponseCode();
-        } finally {
-            if (connection != null) {
-                connection.disconnect();
-            }
-        }
+    public static Incenses usersIncenses(String nickname) throws IOException {
+        HttpResponse response = HttpClient.get(API_ROOT + "users/" + nickname + "/incenses");
+        return MAPPER.readValue(response.getHttpResponse(), Incenses.class);
     }
 }
