@@ -1,4 +1,4 @@
-package ymsr4j.ymsr4j.model;
+package ymsr4j.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;

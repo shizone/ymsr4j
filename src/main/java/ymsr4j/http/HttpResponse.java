@@ -1,4 +1,4 @@
-package ymsr4j.ymsr4j.http;
+package ymsr4j.http;
 
 import lombok.Value;
 

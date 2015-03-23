@@ -1,9 +1,8 @@
 package ymsr4j;
 
 import org.junit.Test;
-import ymsr4j.ymsr4j.model.Incenses;
-import ymsr4j.ymsr4j.model.User;
-import ymsr4j.ymsr4j.model.Users;
+import ymsr4j.model.Incenses;
+import ymsr4j.model.Users;
 
 import java.text.DateFormat;
 import java.text.ParseException;

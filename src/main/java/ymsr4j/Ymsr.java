@@ -1,10 +1,10 @@
 package ymsr4j;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import ymsr4j.ymsr4j.http.HttpClient;
-import ymsr4j.ymsr4j.http.HttpResponse;
-import ymsr4j.ymsr4j.model.Incenses;
-import ymsr4j.ymsr4j.model.Users;
+import ymsr4j.http.HttpClient;
+import ymsr4j.http.HttpResponse;
+import ymsr4j.model.Incenses;
+import ymsr4j.model.Users;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
