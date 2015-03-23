@@ -32,10 +32,16 @@ public class HttpClient {
             connection.setDoOutput(true);
             connection.setRequestMethod("POST");
 
-            try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream(),
-                    StandardCharsets.UTF_8))) {
+            BufferedWriter writer = null;
+            try {
+                writer = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream(),
+                        StandardCharsets.UTF_8));
                 writer.write(parameter);
                 writer.flush();
+            } finally {
+                if (writer != null) {
+                    writer.close();
+                }
             }
 
             return httpResponse(connection);
@@ -50,12 +56,22 @@ public class HttpClient {
         StringBuilder response = new StringBuilder();
         int responseCode = connection.getResponseCode();
         if (responseCode == HttpURLConnection.HTTP_OK) {
-            try (InputStreamReader isr = new InputStreamReader(connection.getInputStream(),
-                    StandardCharsets.UTF_8);
-                 BufferedReader reader = new BufferedReader(isr)) {
+            InputStreamReader isr = null;
+            BufferedReader reader = null;
+            try {
+                isr = new InputStreamReader(connection.getInputStream(),
+                        StandardCharsets.UTF_8);
+                reader = new BufferedReader(isr);
                 String line;
                 while ((line = reader.readLine()) != null) {
                     response.append(line);
+                }
+            } finally {
+                if (reader != null) {
+                    reader.close();
+                }
+                if (isr != null) {
+                    isr.close();
                 }
             }
         }
